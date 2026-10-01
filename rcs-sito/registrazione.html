@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diventa partner / Richiedi informazioni — RCS S.r.l.</title>
+<meta name="description" content="Richiedi di entrare nel network di partner RCS S.r.l. o richiedi informazioni sui finanziamenti europei per il tuo settore.">
+<link rel="icon" href="assets/img/logo-rcs.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Vai al contenuto</a>
+
+<header>
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <img src="assets/img/logo-rcs.png" alt="Logo RCS S.r.l.">
+        <span>RCS S.r.l.<small>CONSULTING</small></span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="settori.html">Aree di specializzazione</a>
+        <div class="nav-dropdown">
+          <a href="partner.html">Partner ▾</a>
+          <div class="nav-dropdown-panel">
+            <a href="partner-corsetti.html">⚙️ Corsetti S.r.l.</a>
+            <a href="partner-arma.html">💧 Arma S.r.l.</a>
+            <a href="partner-ingaeta.html">☀️ Ingaeta S.r.l.</a>
+            <a href="partner-faza.html">🐔 Faza S.r.l.</a>
+            <a href="partner-plasmon.html">🍼 Plasmon S.p.A.</a>
+            <a href="partner-petrolifere.html">🛢️ Società petrolifere</a>
+          </div>
+        </div>
+        <a href="contatti.html">Contatti</a>
+      </div>
+      <div class="nav-cta">
+        <a href="contatti.html" class="btn btn-outline">Contattaci</a>
+        <a href="registrazione.html" class="btn btn-primary">Diventa partner</a>
+        <button class="nav-toggle" aria-label="Apri menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="settori.html">Aree di specializzazione</a>
+    <a href="partner.html">Partner</a>
+    <div class="sub-links">
+      <a href="partner-corsetti.html">— Corsetti S.r.l.</a>
+      <a href="partner-arma.html">— Arma S.r.l.</a>
+      <a href="partner-ingaeta.html">— Ingaeta S.r.l.</a>
+      <a href="partner-faza.html">— Faza S.r.l.</a>
+      <a href="partner-plasmon.html">— Plasmon S.p.A.</a>
+      <a href="partner-petrolifere.html">— Società petrolifere</a>
+    </div>
+    <a href="contatti.html">Contatti</a>
+    <a href="registrazione.html">Diventa partner</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero page-hero" style="min-height:42vh;">
+    <div class="hero-slides" data-hero-slides>
+      <div class="hero-slide active" style="background-image:url('assets/img/stock/33175653.jpg')"></div>
+    </div>
+    <div class="container hero-content">
+      <div class="breadcrumb"><a href="index.html">Home</a> / <span>Diventa partner</span></div>
+      <div class="hero-eyebrow">Candidati al network</div>
+      <h1>Diventa partner o richiedi informazioni</h1>
+      <p class="lead">Raccontaci la tua azienda e il settore in cui operi: il nostro team valuterà l'opportunità di partnership o di supporto ai finanziamenti europei più adatta.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="split reveal" style="align-items:flex-start;">
+
+        <div class="split-text">
+          <div class="eyebrow">Come funziona</div>
+          <h2>Tre passaggi semplici</h2>
+          <ul class="numbered-steps" style="display:block;">
+            <li style="margin-bottom:16px;"><h4>1. Invia la richiesta</h4><p>Compila il modulo con i dati della tua azienda e il settore di interesse.</p></li>
+            <li style="margin-bottom:16px;"><h4>2. Analisi preliminare</h4><p>Il team RCS valuta l'opportunità di partnership o di accesso ai finanziamenti.</p></li>
+            <li><h4>3. Confronto diretto</h4><p>Ti ricontattiamo per approfondire i dettagli e i prossimi passi.</p></li>
+          </ul>
+          <div class="card" style="margin-top:30px;">
+            <div class="card-accent-bar"></div>
+            <h3>Preferisci parlarne subito?</h3>
+            <p>Chiamaci al <a href="tel:+393288321816" style="color:var(--accent-cyan); font-weight:700;">+39 328 832 1816</a> oppure scrivi a <a href="mailto:info@rcsworld.eu" style="color:var(--accent-cyan); font-weight:700;">info@rcsworld.eu</a>.</p>
+          </div>
+        </div>
+
+        <div class="split-media">
+          <div class="form-card">
+            <form id="registration-form" novalidate>
+              <div class="form-submit-error" id="form-submit-error"></div>
+
+              <div class="form-row hp-field" aria-hidden="true">
+                <label for="sito-web">Non compilare questo campo</label>
+                <input type="text" id="sito-web" name="sito_web" tabindex="-1" autocomplete="off">
+              </div>
+
+              <div class="form-row">
+                <label for="ragione-sociale">Ragione sociale <span class="req">*</span></label>
+                <input type="text" id="ragione-sociale" name="ragione_sociale" data-required data-min-length="2" placeholder="Nome della tua azienda">
+                <span class="form-error">Inserisci il nome della tua azienda.</span>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-row">
+                  <label for="referente">Nome del referente <span class="req">*</span></label>
+                  <input type="text" id="referente" name="referente" data-required data-min-length="2" placeholder="Nome e cognome">
+                  <span class="form-error">Inserisci il nome del referente.</span>
+                </div>
+                <div class="form-row">
+                  <label for="telefono">Telefono</label>
+                  <input type="tel" id="telefono" name="telefono" placeholder="+39 ...">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <label for="email">Email <span class="req">*</span></label>
+                <input type="email" id="email" name="email" data-required placeholder="nome@azienda.it">
+                <span class="form-error">Inserisci un indirizzo email valido.</span>
+              </div>
+
+              <div class="form-row">
+                <label for="settore">Settore di interesse <span class="req">*</span></label>
+                <select id="settore" name="settore" data-required>
+                  <option value="" selected disabled>Seleziona un settore</option>
+                  <option value="partnership-generale">Partnership generale</option>
+                  <option value="infrastrutture">Infrastrutture</option>
+                  <option value="dighe-idroelettriche">Dighe idroelettriche</option>
+                  <option value="ponti">Ponti stradali e autostradali</option>
+                  <option value="agricoltura">Agricoltura</option>
+                  <option value="energie-rinnovabili">Energie rinnovabili</option>
+                  <option value="miniere-oro">Miniere d'oro</option>
+                  <option value="carbone">Carbone</option>
+                  <option value="petrolifero">Settore petrolifero</option>
+                  <option value="ferroviario">Settore ferroviario</option>
+                  <option value="altro">Altro</option>
+                </select>
+                <span class="form-error">Seleziona un settore di interesse.</span>
+              </div>
+
+              <div class="form-row">
+                <label for="messaggio">Messaggio <span class="req">*</span></label>
+                <textarea id="messaggio" name="messaggio" data-required data-min-length="10" placeholder="Raccontaci brevemente la tua azienda e la richiesta..."></textarea>
+                <span class="form-error">Aggiungi qualche dettaglio in più (almeno 10 caratteri).</span>
+              </div>
+
+              <div class="form-row checkbox-row">
+                <input type="checkbox" id="consent-privacy" name="consent_privacy">
+                <label for="consent-privacy" style="margin:0; font-weight:500;">Acconsento al trattamento dei miei dati personali da parte di RCS S.r.l. per essere ricontattato in merito alla mia richiesta. <span class="req">*</span></label>
+              </div>
+
+              <button type="submit" id="form-submit-btn" class="btn btn-primary btn-block">Invia richiesta</button>
+              <p class="form-note">I campi contrassegnati con * sono obbligatori. Ti risponderemo all'indirizzo email indicato.</p>
+            </form>
+
+            <div id="form-success" class="form-success">
+              <div class="icon-badge">✓</div>
+              <h3>Richiesta inviata</h3>
+              <p>Grazie per il tuo interesse verso RCS S.r.l. Il nostro team esaminerà la richiesta e ti ricontatterà al più presto.</p>
+              <a href="index.html" class="btn btn-outline">Torna alla home</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand">
+          <img src="assets/img/logo-rcs.png" alt="Logo RCS S.r.l.">
+          <span>RCS S.r.l.</span>
+        </div>
+        <p>Società di intermediazione commerciale, industriale e finanziaria attiva a livello nazionale e internazionale.</p>
+        <p>P.IVA 13997421006</p>
+      </div>
+      <div class="footer-col">
+        <h5>Naviga</h5>
+        <a href="index.html">Home</a>
+        <a href="settori.html">Aree di specializzazione</a>
+        <a href="partner.html">Partner</a>
+        <a href="contatti.html">Contatti</a>
+        <a href="registrazione.html">Diventa partner</a>
+      </div>
+      <div class="footer-col">
+        <h5>Partner</h5>
+        <a href="partner-corsetti.html">Corsetti S.r.l.</a>
+        <a href="partner-arma.html">Arma S.r.l.</a>
+        <a href="partner-ingaeta.html">Ingaeta S.r.l.</a>
+        <a href="partner-faza.html">Faza S.r.l.</a>
+        <a href="partner-plasmon.html">Plasmon S.p.A.</a>
+        <a href="partner-petrolifere.html">Società petrolifere</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contatti</h5>
+        <a href="tel:+393288321816">+39 328 832 1816</a>
+        <a href="mailto:info@rcsworld.eu">info@rcsworld.eu</a>
+        <p>Via Filippo Civinini, 61<br>00197 Roma (RM), Italia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 RCS S.r.l. — Tutti i diritti riservati.</span>
+      <span>Sede legale: Via Lombardia 1E, 00012 Guidonia Montecelio (RM)</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+</body>
+</html>
