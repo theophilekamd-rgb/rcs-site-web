@@ -14,3 +14,10 @@ Thumbs.db
 # logs
 *.log
 npm-debug.log*
+
+# RCS site: working/debug files, not part of the published site
+rcs-sito/assets/img/team/*-original.jpg
+rcs-sito/assets/img/team/bg-*.jpg
+rcs-sito/assets/img/team/debug-*
+rcs-sito/assets/img/team/compose.py
+rcs-sito/assets/img/team/__pycache__/
