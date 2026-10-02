@@ -15,7 +15,8 @@
   --accent: #4f8ef7;
   --accent-cyan: #22d3ee;
   --accent-purple: #a78bfa;
-  --accent-gradient: linear-gradient(135deg, var(--accent-cyan), var(--accent) 55%, var(--accent-purple));
+  --accent-gold: #d4af37;
+  --accent-gradient: linear-gradient(135deg, var(--accent-cyan), var(--accent) 50%, var(--accent-purple) 78%, var(--accent-gold) 100%);
   --success: #34d399;
   --radius-sm: 8px;
   --radius-md: 14px;
