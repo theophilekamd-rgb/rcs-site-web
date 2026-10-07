@@ -144,9 +144,20 @@ li { margin-bottom: .4em; }
   justify-content: space-between;
   gap: 20px;
 }
-.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 17px; }
-.brand img { height: 80px; width: auto; }
+.brand { display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 800; font-size: 17px; }
 .brand small { display: block; font-weight: 500; font-size: 11px; color: var(--text-faint); letter-spacing: .06em; }
+
+.logo-icon { height: 40px; width: auto; animation: logo-spin 9s linear infinite; }
+.logo-wordmark { height: 26px; width: auto; }
+.footer-brand .logo-icon { height: 46px; }
+.footer-brand .logo-wordmark { height: 30px; }
+@keyframes logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-icon { animation: none; }
+}
 
 .nav-links { display: flex; align-items: center; gap: 6px; }
 .nav-links a {
@@ -246,10 +257,15 @@ li { margin-bottom: .4em; }
   background-size: cover;
   background-position: center;
   opacity: 0;
+  transform: scale(1);
   filter: brightness(1.15) saturate(1.1);
   transition: opacity 1.6s ease;
 }
-.hero-slide.active { opacity: 1; }
+.hero-slide.active { opacity: 1; animation: kenburns 7s ease-out forwards; }
+@keyframes kenburns {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
 .hero::after {
   content: "";
   position: absolute; inset: 0;
@@ -277,21 +293,21 @@ li { margin-bottom: .4em; }
 
 .hero-content {
   max-width: 760px;
-  padding: 36px 40px;
-  background: linear-gradient(135deg, rgba(5,7,13,.6), rgba(5,7,13,.32));
-  backdrop-filter: blur(14px) saturate(130%);
-  -webkit-backdrop-filter: blur(14px) saturate(130%);
-  border: 1px solid rgba(255,255,255,.1);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 30px 70px -30px rgba(0,0,0,.65);
 }
-@media (max-width: 640px) { .hero-content { padding: 26px 24px; } }
+/* Sfondo del testo completamente trasparente su ogni hero del sito, niente riquadro */
+/* Slide troppo chiara: il testo passa a tono scuro (classe assegnata via JS in base alla slide attiva) */
+.hero-content.on-light h1,
+.hero-content.on-light p.lead {
+  color: #0d1526;
+  text-shadow: 0 2px 14px rgba(255,255,255,.6);
+}
+.hero-content.on-light p.lead { opacity: 1; font-weight: 700; }
 .hero-eyebrow {
   display: inline-block;
   padding: 7px 16px;
   border-radius: 999px;
   border: 1px solid var(--border-strong);
-  background: rgba(255,255,255,.06);
+  background: rgba(5,7,13,.35);
   font-size: 13px;
   font-weight: 700;
   color: var(--accent-cyan);
@@ -299,7 +315,7 @@ li { margin-bottom: .4em; }
   margin-bottom: 22px;
 }
 .hero h1 { font-size: clamp(34px, 5.6vw, 62px); margin-bottom: 20px; text-shadow: 0 2px 18px rgba(0,0,0,.4); }
-.hero p.lead { font-size: 18px; max-width: 620px; color: var(--text); opacity: .92; margin-bottom: 32px; }
+.hero p.lead { font-size: 18px; max-width: 620px; color: var(--text); opacity: .92; margin-bottom: 32px; text-shadow: 0 2px 14px rgba(0,0,0,.55); }
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
 .page-hero {
@@ -596,8 +612,7 @@ footer { background: var(--bg-soft); border-top: 1px solid var(--border); paddin
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 46px; }
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
-.footer-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.footer-brand img { height: 76px; }
+.footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 14px; }
 .footer-brand span { font-weight: 800; font-size: 17px; }
 .footer-col h5 { font-size: 13px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-faint); margin-bottom: 16px; }
 .footer-col a, .footer-col p { display: block; font-size: 14.5px; color: var(--text-muted); margin-bottom: 11px; }

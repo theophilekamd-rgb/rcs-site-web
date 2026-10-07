@@ -64,7 +64,16 @@ function initHeroSlideshow() {
 
   const slides = Array.from(container.querySelectorAll('.hero-slide'));
   const dotsWrap = document.querySelector('[data-hero-dots]');
-  if (slides.length <= 1) return;
+  const heroContent = document.querySelector('.hero-content');
+
+  function applyTextTheme(slide) {
+    heroContent && heroContent.classList.toggle('on-light', slide.dataset.textTheme === 'light');
+  }
+
+  if (slides.length <= 1) {
+    slides[0] && applyTextTheme(slides[0]);
+    return;
+  }
 
   let current = 0;
   let timer;
@@ -86,6 +95,7 @@ function initHeroSlideshow() {
     current = index;
     slides[current].classList.add('active');
     dots[current] && dots[current].classList.add('active');
+    applyTextTheme(slides[current]);
     restart();
   }
 
@@ -97,6 +107,7 @@ function initHeroSlideshow() {
   }
 
   slides[0].classList.add('active');
+  applyTextTheme(slides[0]);
   restart();
 }
 
