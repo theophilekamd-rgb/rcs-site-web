@@ -65,9 +65,12 @@ function initHeroSlideshow() {
   const slides = Array.from(container.querySelectorAll('.hero-slide'));
   const dotsWrap = document.querySelector('[data-hero-dots]');
   const heroContent = document.querySelector('.hero-content');
+  const navbar = document.querySelector('.navbar');
 
   function applyTextTheme(slide) {
-    heroContent && heroContent.classList.toggle('on-light', slide.dataset.textTheme === 'light');
+    const isLight = slide.dataset.textTheme === 'light';
+    heroContent && heroContent.classList.toggle('on-light', isLight);
+    navbar && navbar.classList.toggle('on-light', isLight);
   }
 
   if (slides.length <= 1) {
@@ -115,11 +118,16 @@ function initHeroSlideshow() {
 function initNavShadow() {
   const nav = document.querySelector('.navbar');
   if (!nav) return;
+  const hero = document.querySelector('.hero');
   const onScroll = () => {
     if (window.scrollY > 12) {
       nav.style.boxShadow = '0 10px 30px -18px rgba(0,0,0,.7)';
     } else {
       nav.style.boxShadow = 'none';
+    }
+    // sotto l'hero lo sfondo pagina è sempre scuro: forza il testo/logo chiaro
+    if (hero) {
+      nav.classList.toggle('past-hero', window.scrollY > hero.offsetHeight - nav.offsetHeight);
     }
   };
   document.addEventListener('scroll', onScroll, { passive: true });

@@ -128,10 +128,10 @@ li { margin-bottom: .4em; }
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: rgba(5, 7, 13, 0.72);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border-bottom: 1px solid var(--border);
+  background: transparent;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  border-bottom: 1px solid rgba(255,255,255,.08);
   transition: background .3s ease;
 }
 .nav-inner {
@@ -147,8 +147,16 @@ li { margin-bottom: .4em; }
 .brand { display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 800; font-size: 17px; }
 .brand small { display: block; font-weight: 500; font-size: 11px; color: var(--text-faint); letter-spacing: .06em; }
 
-.logo-icon { height: 40px; width: auto; animation: logo-spin 9s linear infinite; }
-.logo-wordmark { height: 26px; width: auto; }
+.logo-icon {
+  height: 40px; width: auto;
+  animation: logo-spin 9s linear infinite;
+  filter: drop-shadow(0 0 6px rgba(255,255,255,.85)) drop-shadow(0 0 16px rgba(255,214,140,.6));
+}
+.logo-wordmark { height: 26px; width: auto; filter: drop-shadow(0 0 5px rgba(255,255,255,.55)); }
+/* Sulla navbar (trasparente) il testo del logo passa a bianco quando lo sfondo dietro è scuro,
+   e torna al colore originale quando la slide attiva è chiara (finché si resta dentro l'hero) */
+.navbar .logo-wordmark { filter: brightness(0) invert(1) drop-shadow(0 0 4px rgba(0,0,0,.3)); transition: filter .3s ease; }
+.navbar.on-light:not(.past-hero) .logo-wordmark { filter: none; }
 .footer-brand .logo-icon { height: 46px; }
 .footer-brand .logo-wordmark { height: 30px; }
 @keyframes logo-spin {
@@ -324,7 +332,7 @@ li { margin-bottom: .4em; }
 .page-hero h1 { font-size: clamp(30px, 4.6vw, 48px); }
 
 /* ---------- Sections ---------- */
-section { padding: 96px 0; position: relative; }
+section { padding: 64px 0; position: relative; }
 .section-head { max-width: 700px; margin-bottom: 52px; }
 .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
 .section-alt { background: var(--bg-soft); }
@@ -376,7 +384,7 @@ section { padding: 96px 0; position: relative; }
   position: relative;
   isolation: isolate;
 }
-.media-frame img { width: 100%; height: 100%; object-fit: cover; }
+.media-frame img, .media-frame video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .media-ratio-16-9 { aspect-ratio: 16/9; }
 .media-ratio-4-3 { aspect-ratio: 4/3; }
 .media-ratio-3-2 { aspect-ratio: 3/2; }
@@ -647,7 +655,7 @@ footer { background: var(--bg-soft); border-top: 1px solid var(--border); paddin
 .value-list li { list-style: none; margin: 0; padding: 16px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); font-size: 14.5px; color: var(--text-muted); }
 .value-list b { color: var(--text); display: block; margin-bottom: 4px; font-size: 14.5px; }
 
-.numbered-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+.numbered-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; margin-top: 24px; }
 @media (max-width: 860px) { .numbered-steps { grid-template-columns: 1fr; } }
 .numbered-steps li { list-style: none; position: relative; padding: 30px 22px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); }
 .numbered-steps li::before {
