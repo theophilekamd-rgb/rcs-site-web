@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: rcs-sito
+    runtime: node
+    rootDir: rcs-server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_SECURE
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_TO
+        sync: false
+      - key: MAIL_FROM
+        sync: false
+      - key: DAHL_API_KEY
+        sync: false
+      - key: DAHL_MODEL
+        sync: false

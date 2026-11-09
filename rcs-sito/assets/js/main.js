@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroSlideshow();
   initNavShadow();
   initRegistrationForm();
+  initChatWidget();
 });
 
 /* ---------- Mobile menu ---------- */
@@ -238,5 +239,77 @@ function initRegistrationForm() {
     field.addEventListener('input', () => {
       field.closest('.form-row')?.classList.remove('invalid');
     });
+  });
+}
+
+/* ---------- Chat widget (assistenza AI) ---------- */
+function initChatWidget() {
+  const wrap = document.createElement('div');
+  wrap.className = 'chat-widget';
+  wrap.innerHTML = `
+    <div class="chat-panel" id="chat-panel">
+      <div class="chat-header">Assistenza RCS</div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg bot">Ciao! Chiedimi dei nostri settori (ferroviario, dighe idroelettriche, ponti, agricoltura, energie rinnovabili, miniere d'oro, carbone, petrolifero) o di come contattarci.</div>
+      </div>
+      <form class="chat-form" id="chat-form">
+        <input type="text" id="chat-input" placeholder="Scrivi un messaggio…" autocomplete="off" maxlength="500" required>
+        <button type="submit">Invia</button>
+      </form>
+    </div>
+    <button type="button" class="chat-toggle" id="chat-toggle" aria-label="Apri assistenza">💬</button>
+  `;
+  document.body.appendChild(wrap);
+
+  const panel = wrap.querySelector('#chat-panel');
+  const toggle = wrap.querySelector('#chat-toggle');
+  const messages = wrap.querySelector('#chat-messages');
+  const form = wrap.querySelector('#chat-form');
+  const input = wrap.querySelector('#chat-input');
+  const history = [];
+
+  toggle.addEventListener('click', () => {
+    panel.classList.toggle('open');
+    if (panel.classList.contains('open')) input.focus();
+  });
+
+  function addMessage(role, text) {
+    const el = document.createElement('div');
+    el.className = `chat-msg ${role}`;
+    el.textContent = text;
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+    return el;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    addMessage('user', text);
+    history.push({ role: 'user', content: text });
+
+    const typing = addMessage('bot typing', 'Sto scrivendo…');
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ history }),
+      });
+      const data = await response.json().catch(() => ({}));
+      typing.remove();
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.error || 'Servizio non disponibile. Riprova più tardi.');
+      }
+
+      addMessage('bot', data.reply);
+      history.push({ role: 'assistant', content: data.reply });
+    } catch (err) {
+      typing.remove();
+      addMessage('bot', err.message || 'Servizio non disponibile. Riprova più tardi.');
+    }
   });
 }

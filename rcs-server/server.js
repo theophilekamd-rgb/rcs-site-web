@@ -138,6 +138,71 @@ app.post('/api/contatto', contactLimiter, async (req, res) => {
   }
 });
 
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { ok: false, error: 'Troppe richieste. Riprova più tardi.' },
+});
+
+const CHAT_SYSTEM_PROMPT = [
+  "Sei l'assistente virtuale del sito di RCS S.r.l., azienda italiana attiva nei settori:",
+  'infrastrutture, dighe idroelettriche, ponti stradali e autostradali, agricoltura,',
+  "energie rinnovabili, miniere d'oro, carbone, settore petrolifero, settore ferroviario.",
+  'Rispondi in italiano, in modo breve e cordiale. Per richieste commerciali formali indirizza',
+  "l'utente al modulo contatti del sito o a info@rcsworld.eu. Se non conosci una risposta, dillo",
+  'onestamente senza inventare dati.',
+].join(' ');
+
+app.post('/api/chat', chatLimiter, async (req, res) => {
+  if (!process.env.DAHL_API_KEY) {
+    console.error('[chat] DAHL_API_KEY non configurata: imposta la variabile in rcs-server/.env');
+    return res.status(503).json({ ok: false, error: 'Assistente non ancora configurato sul server.' });
+  }
+
+  const history = Array.isArray(req.body?.history) ? req.body.history : [];
+  const messages = [
+    { role: 'system', content: CHAT_SYSTEM_PROMPT },
+    ...history
+      .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
+      .slice(-10)
+      .map((m) => ({ role: m.role, content: m.content.slice(0, 1000) })),
+  ];
+
+  if (!messages.some((m) => m.role === 'user')) {
+    return res.status(400).json({ ok: false, error: 'Messaggio mancante.' });
+  }
+
+  try {
+    const dahlRes = await fetch('https://inference.dahl.global/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.DAHL_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: process.env.DAHL_MODEL || 'MiniMaxAI/MiniMax-M2.7',
+        messages,
+        max_tokens: 400,
+      }),
+    });
+
+    const data = await dahlRes.json().catch(() => ({}));
+    const reply = data?.choices?.[0]?.message?.content?.trim();
+
+    if (!dahlRes.ok || !reply) {
+      console.error('[chat] risposta Dahl non valida:', dahlRes.status, data);
+      return res.status(502).json({ ok: false, error: 'Assistente non disponibile. Riprova più tardi.' });
+    }
+
+    return res.json({ ok: true, reply });
+  } catch (err) {
+    console.error('[chat] richiesta a Dahl non riuscita:', err);
+    return res.status(502).json({ ok: false, error: 'Assistente non disponibile. Riprova più tardi.' });
+  }
+});
+
 app.use(express.static(SITE_DIR));
 
 app.use((req, res) => {
