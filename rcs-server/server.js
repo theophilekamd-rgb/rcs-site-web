@@ -150,10 +150,16 @@ const CHAT_SYSTEM_PROMPT = [
   "Sei l'assistente virtuale del sito di RCS S.r.l., azienda italiana attiva nei settori:",
   'infrastrutture, dighe idroelettriche, ponti stradali e autostradali, agricoltura,',
   "energie rinnovabili, miniere d'oro, carbone, settore petrolifero, settore ferroviario.",
-  'Rispondi in italiano, in modo breve e cordiale. Per richieste commerciali formali indirizza',
+  "Rispondi in una sola lingua: quella dell'ultimo messaggio dell'utente (italiano se hai dubbi), senza mai mescolare lingue diverse nella stessa risposta.",
+  'Scrivi solo la risposta finale, breve e cordiale, in testo semplice: niente ragionamenti, tag o markup. Per richieste commerciali formali indirizza',
   "l'utente al modulo contatti del sito o a info@rcsworld.eu. Se non conosci una risposta, dillo",
   'onestamente senza inventare dati.',
 ].join(' ');
+
+// Alcuni modelli antepongono il ragionamento in <think>…</think>: resta solo la risposta finale.
+function cleanReply(content) {
+  return String(content || '').split(/<\/think>/i).pop().replace(/<think>[\s\S]*/i, '').trim();
+}
 
 app.post('/api/chat', chatLimiter, async (req, res) => {
   if (!process.env.DAHL_API_KEY) {
@@ -184,12 +190,12 @@ app.post('/api/chat', chatLimiter, async (req, res) => {
       body: JSON.stringify({
         model: process.env.DAHL_MODEL || 'MiniMaxAI/MiniMax-M2.7',
         messages,
-        max_tokens: 400,
+        max_tokens: 1500,
       }),
     });
 
     const data = await dahlRes.json().catch(() => ({}));
-    const reply = data?.choices?.[0]?.message?.content?.trim();
+    const reply = cleanReply(data?.choices?.[0]?.message?.content);
 
     if (!dahlRes.ok || !reply) {
       console.error('[chat] risposta Dahl non valida:', dahlRes.status, data);
@@ -209,6 +215,8 @@ app.use((req, res) => {
   res.status(404).send('Pagina non trovata.');
 });
 
-app.listen(PORT, () => {
+if (require.main === module) app.listen(PORT, () => {
   console.log(`Sito RCS S.r.l. disponibile su http://localhost:${PORT}`);
 });
+
+module.exports = { cleanReply };

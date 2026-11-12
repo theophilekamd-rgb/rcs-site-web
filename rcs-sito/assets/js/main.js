@@ -257,7 +257,7 @@ function initChatWidget() {
         <button type="submit">Invia</button>
       </form>
     </div>
-    <button type="button" class="chat-toggle" id="chat-toggle" aria-label="Apri assistenza">💬</button>
+    <button type="button" class="chat-toggle" id="chat-toggle" aria-label="Apri assistenza"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 8.3 8.3 0 0 1-4-1L3 21l1.2-4.8a8.4 8.4 0 1 1 16.8-4.7z"/></svg></button>
   `;
   document.body.appendChild(wrap);
 
