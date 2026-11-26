@@ -12,8 +12,8 @@
   --text: #eef2fb;
   --text-muted: #9aa7c4;
   --text-faint: #6b7590;
-  --accent: #147dc8;
-  --accent-cyan: #25bef4;
+  --accent: #b8964a;
+  --accent-cyan: #d8c277; /* oro del logo (nome storico della variabile) */
   --success: #34d399;
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -102,7 +102,7 @@ li { margin-bottom: .4em; }
   background: var(--accent-cyan);
   color: #04070f;
 }
-.btn-primary:hover { box-shadow: 0 12px 30px -10px rgba(37, 190, 244, .45); transform: translateY(-2px); }
+.btn-primary:hover { box-shadow: 0 12px 30px -10px rgba(216, 194, 119, .4); transform: translateY(-2px); }
 .btn-outline {
   background: rgba(255,255,255,.04);
   border-color: var(--border-strong);
@@ -120,7 +120,7 @@ li { margin-bottom: .4em; }
   height: var(--nav-h);
   display: flex;
   align-items: center;
-  background: transparent;
+  background: rgba(20,33,61,.82);
   backdrop-filter: blur(10px) saturate(140%);
   -webkit-backdrop-filter: blur(10px) saturate(140%);
   border-bottom: 1px solid rgba(255,255,255,.08);
@@ -136,17 +136,13 @@ li { margin-bottom: .4em; }
   justify-content: space-between;
   gap: 20px;
 }
-.brand { display: flex; flex-direction: column; align-items: center; gap: 2px; font-weight: 800; font-size: 17px; }
+.brand { display: flex; flex-direction: column; align-items: center; gap: 7px; font-weight: 800; font-size: 17px; }
 .brand small { display: block; font-weight: 500; font-size: 11px; color: var(--text-faint); letter-spacing: .06em; }
 
 .logo-icon { height: 40px; width: auto; animation: logo-spin 9s linear infinite; }
 @keyframes logo-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .logo-icon { animation: none; } }
 .logo-wordmark { height: 26px; width: auto; }
-/* Sulla navbar (trasparente) il testo del logo passa a bianco quando lo sfondo dietro è scuro,
-   e torna al colore originale quando la slide attiva è chiara (finché si resta dentro l'hero) */
-.navbar .logo-wordmark { filter: brightness(0) invert(1); transition: filter .3s ease; }
-.navbar.on-light:not(.past-hero) .logo-wordmark { filter: none; }
 .footer-brand .logo-icon { height: 46px; }
 .footer-brand .logo-wordmark { height: 30px; }
 
@@ -161,7 +157,7 @@ li { margin-bottom: .4em; }
   position: relative;
 }
 .nav-links a:hover { color: var(--text); background: rgba(255,255,255,.06); }
-.nav-links a.active { color: var(--text); background: rgba(37,190,244,.14); }
+.nav-links a.active { color: var(--text); background: rgba(216,194,119,.16); }
 
 .nav-dropdown { position: relative; }
 .nav-dropdown-panel {
@@ -364,7 +360,7 @@ section { padding: clamp(56px, 7vw, 88px) 0; position: relative; }
   width: 46px; height: 46px;
   border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(37,190,244,.12);
+  background: rgba(216,194,119,.12);
   color: var(--accent-cyan);
   margin-bottom: 16px;
 }
@@ -605,7 +601,7 @@ section { padding: clamp(56px, 7vw, 88px) 0; position: relative; }
 .contact-info-item:last-child { border-bottom: none; }
 .contact-info-item .icon-badge { flex-shrink: 0; margin-bottom: 0; }
 .contact-info-item h4 { font-size: 15px; margin-bottom: 4px; }
-.contact-info-item p { font-size: 14.5px; margin-bottom: 0; }
+.contact-info-item p { font-size: 14.5px; margin-bottom: 0; color: var(--accent-cyan); }
 .contact-info-item a { color: var(--accent-cyan); font-weight: 600; }
 
 .map-frame { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); }
@@ -616,7 +612,7 @@ footer { background: var(--bg-soft); border-top: 1px solid var(--border); paddin
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
-.footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; margin-bottom: 14px; }
+.footer-brand { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; margin-bottom: 14px; }
 .footer-brand span { font-weight: 800; font-size: 17px; }
 .footer-col h5 { font-size: 13px; color: var(--text-faint); margin-bottom: 16px; }
 .footer-col a, .footer-col p { display: block; font-size: 14.5px; color: var(--text-muted); margin-bottom: 11px; }
