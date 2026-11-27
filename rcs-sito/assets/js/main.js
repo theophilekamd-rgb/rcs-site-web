@@ -9,7 +9,80 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavShadow();
   initRegistrationForm();
   initChatWidget();
+  initLanguage();
 });
+
+/* ---------- Lingua del sito ----------
+   I testi restano in italiano nell'HTML; per le altre lingue si carica
+   assets/i18n/<lang>.json (testo italiano -> traduzione) e si sostituiscono
+   testi e attributi. Un testo senza traduzione resta in italiano. */
+const LANGS = { it: 'IT', en: 'EN', fr: 'FR', es: 'ES', de: 'DE' };
+
+function getLang() {
+  try {
+    const l = localStorage.getItem('rcs-lang');
+    return LANGS[l] ? l : 'it';
+  } catch (_) { return 'it'; }
+}
+
+// nasconde la pagina finché la traduzione non è applicata (max 1,5 s)
+if (getLang() !== 'it') {
+  document.documentElement.classList.add('i18n-pending');
+  setTimeout(() => document.documentElement.classList.remove('i18n-pending'), 1500);
+}
+
+function translateTree(root, dict) {
+  const lookup = (s) => dict[s.replace(/\s+/g, ' ').trim()];
+  const swap = (s) => {
+    const t = lookup(s);
+    return t ? s.replace(/\S(?:[\s\S]*\S)?/, () => t) : null;
+  };
+  if (root.nodeType === Node.TEXT_NODE) {
+    const t = swap(root.nodeValue);
+    if (t) root.nodeValue = t;
+    return;
+  }
+  if (root.nodeType !== Node.ELEMENT_NODE) return;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  for (let n; (n = walker.nextNode());) {
+    const t = swap(n.nodeValue);
+    if (t) n.nodeValue = t;
+  }
+  [root, ...root.querySelectorAll('[alt],[placeholder],[aria-label],[title],meta[name="description"]')].forEach((el) => {
+    ['alt', 'placeholder', 'aria-label', 'title', 'content'].forEach((a) => {
+      const v = el.getAttribute(a);
+      const t = v && lookup(v);
+      if (t) el.setAttribute(a, t);
+    });
+  });
+}
+
+function initLanguage() {
+  const lang = getLang();
+  const select = document.createElement('select');
+  select.className = 'lang-select';
+  select.setAttribute('aria-label', 'Lingua / Language');
+  select.innerHTML = Object.entries(LANGS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+  select.value = lang;
+  select.addEventListener('change', () => {
+    try { localStorage.setItem('rcs-lang', select.value); } catch (_) {}
+    location.reload();
+  });
+  document.querySelector('.nav-cta')?.prepend(select);
+
+  if (lang === 'it') return;
+  document.documentElement.lang = lang;
+  fetch(`assets/i18n/${lang}.json`)
+    .then((r) => r.json())
+    .then((dict) => {
+      translateTree(document.documentElement, dict);
+      // testi aggiunti dopo (messaggi del modulo e della chat)
+      new MutationObserver((muts) => muts.forEach((m) => m.addedNodes.forEach((n) => translateTree(n, dict))))
+        .observe(document.body, { childList: true, subtree: true });
+    })
+    .catch(() => {})
+    .finally(() => document.documentElement.classList.remove('i18n-pending'));
+}
 
 /* ---------- Mobile menu ---------- */
 function initMobileMenu() {
